@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Keyboard",
+    "quantity": 10,
+    "price": 799
+  },
+  {
+    "id": 2,
+    "name": "Mouse",
+    "quantity": 5,
+    "price": 499
+  },
+  {
+    "id": 3,
+    "name": "Monitor",
+    "quantity": 3,
+    "price": 5499
+  },
+  {
+    "id": 4,
+    "name": "USB Cable",
+    "quantity": 15,
+    "price": 99
+  }
+]
