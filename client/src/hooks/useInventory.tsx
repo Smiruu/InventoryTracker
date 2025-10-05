@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import inventoryData from "./InventoryData.json";
+import { getAllItems, createItem } from "../api/inventory";
 
 //typescript Type
 type InventoryItem = {
@@ -15,11 +16,11 @@ export const useInventory = () => {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    const fetchInventory = () => {
+    const fetchInventory = async() => {
       setLoading(true);
       try {
-        setInventory(inventoryData);
-        console.log(inventory);
+        const {items} = await getAllItems()
+        setInventory(items);
       } catch (e) {
         setError(true);
       } finally {
@@ -29,15 +30,17 @@ export const useInventory = () => {
     fetchInventory();
   }, []);
 
-  const addItem = (name: string, quantity: number, price: number) => {
-    const newItem: InventoryItem = {
-      id: inventory.length > 0 ? inventory[inventory.length - 1].id + 1 : 1,
-      name,
-      quantity,
-      price,
-    };
-
-    setInventory([...inventory, newItem]);
+  const addItem = async (name: string, quantity: number, price: number) => {
+    setLoading(true)
+    try {
+     const newItem = await createItem(name, quantity, price );
+     setInventory((prev) => [...prev, newItem]);
+    } catch (e) {
+      setError(true)
+    } finally {
+      setLoading(false)
+    }
+   
   };
 
 
