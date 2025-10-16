@@ -6,5 +6,7 @@ const controller = new InventoryController();
 
 router.get("/", controller.getAll);
 router.post("/", controller.create);
+router.delete("/:id", controller.delete);
+router.put("/:id", controller.update);
 
 export default router;

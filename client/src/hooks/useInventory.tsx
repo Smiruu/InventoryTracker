@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import inventoryData from "./InventoryData.json";
-import { getAllItems, createItem } from "../api/inventory";
+import { getAllItems, createItem, updateItem, deleteItem } from "../api/inventory";
 
 //typescript Type
 type InventoryItem = {
@@ -8,6 +7,12 @@ type InventoryItem = {
   name: string;
   quantity: number;
   price: number;
+};
+
+type UpdateData = {
+  name?: string;
+  quantity?: number;
+  price?: number;
 };
 
 export const useInventory = () => {
@@ -43,12 +48,40 @@ export const useInventory = () => {
    
   };
 
+  const updateItemById = async (id: number, data: UpdateData) => {
+    setLoading(true);
+    try {
+      const { updatedItem } = await updateItem(id, data);
+      setInventory((prev) =>
+        prev.map((item) => (item.id === id ? updatedItem : item))
+      );
+    } catch (e) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const deleteItemById = async (id: number) => {
+    setLoading(true);
+    try {
+      await deleteItem(id);
+      setInventory((prev) => prev.filter((item) => item.id !== id));
+    } catch (e) {
+      setError(true);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 
   return {
     inventory,
     loading,
     error,
-
+    
     addItem,
+    updateItemById,
+    deleteItemById,
   };
 };
