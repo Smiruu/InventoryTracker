@@ -15,7 +15,7 @@ type InventoryListProps = {
   selectedIds: number[]; // new prop
 };
 
-const InventoryList = ({ data, onUpdate, onDelete, onSelect, selectedIds }: InventoryListProps) => {
+const InventoryList = ({ data, onUpdate, onSelect, selectedIds }: InventoryListProps) => {
  
   return (
   <table className="min-w-full text-sm text-gray-700">
